@@ -12,7 +12,7 @@ void SysTick_Handler(void) {
 /*----------------------------------------------------------------------------
  * Delay: delays a number of Systicks
  *----------------------------------------------------------------------------*/
-void Delay (uint32_t dlyTicks) {
+extern void Delay (uint32_t dlyTicks) {
   uint32_t curTicks;
 
   curTicks = msTicks;
