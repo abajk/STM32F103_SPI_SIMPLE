@@ -17,7 +17,7 @@ extern void SPI_Initialize(void){
 	GPIOA -> CRL |= GPIO_CRL_CNF5_1 |
 									GPIO_CRL_CNF7_1;
 	
-	SPI1 -> CR1 |= SPI_CR1_BR_0 |
+	SPI1 -> CR1 |= SPI_CR1_BR_2 |
 								 SPI_CR1_SSI |
 								 SPI_CR1_SSM |
 								 SPI_CR1_MSTR;	
@@ -67,12 +67,11 @@ extern void SPI_Initialize_DMA(void){
 }
 
 extern int SPI1_Transmit(uint8_t *buf, uint16_t buf_len){
-		uint16_t i = buf_len - 1;
 		SPI1_CS_bb = 0ul;
 		do{
 			while(!SPI_TXE_bb);
 			SPI1 -> DR = *buf++;
-		} while(i--);
+		} while(--buf_len);
 		while(SPI_BSY_bb);
 		SPI1_CS_bb = 1ul;
 		return 0;
