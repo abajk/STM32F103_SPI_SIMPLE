@@ -20,7 +20,7 @@ int main(void){
 	for(;;){
 		
 		LED_bb ^= 1ul;
-		SPI1_Transmit(buf,sizeof(buf));
+		SPI1_Transmit_DMA(buf,sizeof(buf));
 //		SPI1_Receive(buf,buf_len);
 		Delay(100);
 	}	

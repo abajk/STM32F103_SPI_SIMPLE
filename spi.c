@@ -17,7 +17,7 @@ extern void SPI_Initialize(void){
 	GPIOA -> CRL |= GPIO_CRL_CNF5_1 |
 									GPIO_CRL_CNF7_1;
 	
-	SPI1 -> CR1 |= SPI_CR1_BR_2 |
+	SPI1 -> CR1 |= SPI_CR1_BR_0 |
 								 SPI_CR1_SSI |
 								 SPI_CR1_SSM |
 								 SPI_CR1_MSTR;	
@@ -82,7 +82,7 @@ extern int SPI1_Transmit_DMA(uint8_t *buf, uint16_t buf_len){
 		DMA1_Channel3->CNDTR = buf_len;
 	
 		SPI1_CS_bb = 0ul;
-		DMA1_Channel3->CCR |= DMA_CCR3_EN;	
+		DMA1_Channel3->CCR |= DMA_CCR3_EN;
 		return 0;
 }	
 
@@ -97,3 +97,10 @@ extern int SPI1_Receive(uint8_t *buf, uint16_t buf_len){
 		SPI1_CS_bb = 1ul;
 		return 0;
 }	
+
+void DMA1_Channel3_IRQHandler(void){
+	DMA1->IFCR|=DMA_IFCR_CTCIF3;
+	DMA1_Channel3->CCR &= ~DMA_CCR3_EN;
+	while(SPI_BSY_bb);
+	SPI1_CS_bb = 1ul;
+}
