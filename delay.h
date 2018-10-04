@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef DELAY_H
+#define DELAY_H
 
 #include <stdint.h>
 
